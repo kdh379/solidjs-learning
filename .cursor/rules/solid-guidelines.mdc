@@ -1,0 +1,31 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# SolidJS 프로젝트 가이드라인
+
+## 주요 기술 스택
+
+- pnpm
+- solidjs
+  - https://docs.solidjs.com/solid-start
+  - https://docs.solidjs.com/solid-router
+  - https://www.solidjs.com/docs/latest/api
+- typescript
+- tailwindcss 4.1
+  - 별도 theme를 추가하려면 .css에 지정해야 함
+  - https://tailwindcss.com/docs/adding-custom-styles#customizing-your-theme
+
+## 스타일링
+- TailwindCSS와 daisyUI를 기본 스타일링 도구로 사용
+- 다양한 variants 활용을 위해 cva 라이브러리를 사용할 것
+  - 이는 shadcn과 비슷한 방식으로 동작
+  - 컴포넌트 제작 시 `@daisyui.mdc` 문서를 참고할 것
+
+## SolidJS 최적화
+- 불필요한 리렌더링을 방지하기 위해 `createMemo`를 적극 활용
+- 비동기 데이터는 `createResource`로 관리
+- 부모-자식 간 상태 공유가 필요할 경우 `createContext`/`useContext` 활용
+- app.tsx, entry-client.ts, entry-server.ts는 
+- routes 폴더를 통해 라우팅을 관리할 것
