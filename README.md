@@ -1,10 +1,29 @@
 # SolidJS 찍어먹기
 
-웹 개발은 React로만 하고있는 제가 SolidJS 라이브러리를 찍어먹어보며 배운 내용들을 정리해 봤습니다.
+웹 개발은 React로만 하고 있었는데, SolidJS 라이브러리를 찍어먹어보며 배운 내용들을 정리해 봤습니다.
 
 ## 1. SolidJS의 배경과 특징
 
-SolidJS는 React의 디자인 철학과 일치한다고 하지만, 가상 DOM을 사용하지 않고 직접 DOM 업데이트를 수행한다.
+SolidJS는 React처럼 JSX 문법을 통해 컴포넌트를 작성하며, 코딩 방식 또한 React와 상당부분 일치한다. React 개발자라면 누구나 쉽게 익힐 수 있을 것 같다.
+
+```jsx
+import { createSignal } from "solid-js";
+
+function Counter() {
+  const [counter, setCounter] = createSignal(0);
+
+  return (
+    <div>
+      <button onClick={() => setCounter((prev) => prev + 1)}>증가</button>
+      <p>값: {counter()}</p>
+  </div>
+  )
+}
+
+export default Counter;
+```
+
+React의 디자인 철학과 일치한다고 하지만, 가상 DOM을 사용하지 않고 직접 DOM 업데이트를 수행한다.
 [js-framework-benchmark](https://krausest.github.io/js-framework-benchmark/2025/table_chrome_136.0.7103.93.html) 기준, React 대비 엄청난 성능차이를 보여준다. 거의 Vanilla JS 수준이다.
 
 React는 렌더링 시 React Fiber 알고리즘에 의해, 부모 컴포넌트에서 자식 컴포넌트로 하향식 render 메서드를 반복적으로 호출하지만, SolidJS는 렌더링 시 최초 한번만 수행하여 리액티브 그래프를 구성한 다음, 세분화된 변경과 관련된 명령을 수행한다고 한다.
@@ -330,7 +349,7 @@ export const serverAction = async (data: any) => {
 ### 4.3 Hydration
 
 SolidJS는 hydration 이후 코드가 다시 실행되지 않는다.
-이는 React와 다른 동작 방식으로, React는 hydration 이후 이벤트 주입을 위해 전체 코드를 재실행 하는 방식과 다르다.
+이는 Next.JS의 SSR과 다른 동작 방식으로, React는 hydration 이후 이벤트 주입을 위해 전체 코드를 재실행 하는 방식과 다르다.
 
 만일 `window` 객체에 접근해야할 코드가 있다면, React에선 조건문을 통해 `if(typeof window !== 'undefined')` 를 쓰면 되지만, SolidJS에선 그렇게하면 window에 접근할 수 없다.
 대신, `clientOnly` 함수를 통해 클라이언트전용 컴포넌트임을 명시하여 사용해야만 한다.
